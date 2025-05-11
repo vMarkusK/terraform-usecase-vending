@@ -1,0 +1,28 @@
+{
+  "name": "terraform-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/dhoeric/features/terraform-docs:1" : {},
+    "ghcr.io/itsmechlark/features/trivy:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "tflint --ini",
+  "postCreateCommand": "",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+              "Gruntfuggly.todo-tree",
+              "matheusq94.TFS",
+              "aquasecurityofficial.trivy-vulnerability-scanner",
+              "github.copilot",
+              "github.copilot-chat",
+              "github.vscode-github-actions",
+              "ms-azuretools.vscode-azureresourcegroups",
+              "ms-azuretools.vscode-azure-github-copilot"
+              ]
+        }
+    }
+}
