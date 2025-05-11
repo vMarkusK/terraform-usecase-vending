@@ -24,3 +24,5 @@ provider "azurerm" {
 }
 
 data "azuread_client_config" "this" {}
+
+data "azurerm_subscription" "this" {}
