@@ -19,7 +19,7 @@ locals {
   ]
   tf_files = [
     "main.tf",
-    "variables.tf"
+    "variables.main.tf"
   ]
   wf_files = [
     "Test.yml",
