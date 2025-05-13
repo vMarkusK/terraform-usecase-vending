@@ -1,7 +1,7 @@
 resource "github_repository_environment" "this" {
-  for_each = { for environment in local.environments : environment.name => environment }
+  for_each = toset(local.environments)
 
-  environment = each.value.name
+  environment = each.key
   repository  = local.repository_name
 
   deployment_branch_policy {

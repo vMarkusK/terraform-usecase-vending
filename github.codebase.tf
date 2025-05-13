@@ -43,11 +43,11 @@ resource "github_repository_file" "github_devcontainer" {
 }
 
 resource "github_repository_file" "github_env_tfvars" {
-  for_each = { for environment in local.environments : environment.name => environment }
+  for_each = toset(local.environments)
 
   repository          = github_repository.this.name
   branch              = github_branch.main.branch
-  file                = format("environments/%s.tfvars", each.value.name)
+  file                = format("environments/%s.tfvars", each.key)
   content             = file("${path.module}/files/example.tfvars")
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
@@ -56,23 +56,23 @@ resource "github_repository_file" "github_env_tfvars" {
 }
 
 data "template_file" "env_tfbackend" {
-  for_each = { for environment in local.environments : environment.name => environment }
+  for_each = toset(local.environments)
 
   template = file("${path.module}/files/tfbackend.tftpl")
   vars = {
     rg_name  = local.rg_name
     st_name  = local.st_name
-    key_name = format("%s.tfstate", each.value.name)
+    key_name = format("%s.tfstate", each.key)
   }
 }
 
 resource "github_repository_file" "github_env_tfbackend" {
-  for_each = { for environment in local.environments : environment.name => environment }
+  for_each = toset(local.environments)
 
   repository          = github_repository.this.name
   branch              = github_branch.main.branch
-  file                = format("environments/%s.tfbackend", each.value.name)
-  content             = data.template_file.env_tfbackend[each.value.name].rendered
+  file                = format("environments/%s.tfbackend", each.key)
+  content             = data.template_file.env_tfbackend[each.key].rendered
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email

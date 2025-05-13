@@ -14,12 +14,8 @@ locals {
 # GitHub.Codebase
 locals {
   environments = [
-    {
-      name = "dev"
-    },
-    {
-      name = "prod"
-    }
+    "dev",
+    "prod"
   ]
   tf_files = [
     "main.tf",
