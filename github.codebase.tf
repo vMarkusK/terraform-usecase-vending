@@ -55,18 +55,30 @@ resource "github_repository_file" "github_env_tfvars" {
   overwrite_on_create = true
 }
 
+data "template_file" "env_tfbackend" {
+  for_each = { for environment in local.environments : environment.name => environment }
+
+  template = file("${path.module}/files/tfbackend.tftpl")
+  vars = {
+    rg_name  = local.rg_name
+    st_name  = local.st_name
+    key_name = format("%s.tfstate", each.value.name)
+  }
+}
+
 resource "github_repository_file" "github_env_tfbackend" {
   for_each = { for environment in local.environments : environment.name => environment }
 
   repository          = github_repository.this.name
   branch              = github_branch.main.branch
   file                = format("environments/%s.tfbackend", each.value.name)
-  content             = file("${path.module}/files/example.tfbackend")
+  content             = data.template_file.env_tfbackend[each.value.name].rendered
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
   overwrite_on_create = true
 }
+
 
 resource "github_repository_file" "github_tf_files" {
   for_each = toset(local.tf_files)

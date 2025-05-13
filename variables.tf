@@ -6,7 +6,7 @@ variable "subscription_id" {
 variable "location" {
   description = "Location for all resources"
   type        = string
-  default     = "germywestcentral"
+  default     = "germanywestcentral"
 }
 
 variable "usecase" {

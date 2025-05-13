@@ -11,7 +11,7 @@ locals {
   }
 }
 
-# Codebase
+# GitHub.Codebase
 locals {
   environments = [
     {
@@ -30,4 +30,13 @@ locals {
     "ValidateAndDeploy.yml",
     "ValidateAndPlan.yml"
   ]
+}
+
+# Azure.Storage
+locals {
+  rg_name  = "rg-state-${var.usecase}-${random_string.suffix.result}"
+  uai_name = "uai-${var.usecase}-${random_string.suffix.result}"
+  kv_name  = "kv-${var.usecase}-${random_string.suffix.result}"
+  key_name = "cmk-${var.usecase}-${random_string.suffix.result}"
+  st_name  = "ststate${var.usecase}${random_string.suffix.result}"
 }

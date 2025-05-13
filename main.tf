@@ -16,8 +16,20 @@ terraform {
       source  = "integrations/github"
       version = ">= 6.6"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.13"
+    }
+    http = {
+      source  = "hashicorp/http"
+      version = ">= 3.5"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = ">= 2.2"
+    }
   }
-  required_version = ">= 1.10.5"
+  required_version = ">= 1.11.3"
 }
 
 provider "azurerm" {
