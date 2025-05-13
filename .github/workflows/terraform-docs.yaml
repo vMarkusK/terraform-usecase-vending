@@ -10,6 +10,9 @@ permissions: read-all
 jobs:
   docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
     steps:
     - uses: actions/checkout@v3
       with:
