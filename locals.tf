@@ -13,10 +13,6 @@ locals {
 
 # Codebase
 locals {
-  tf_files = [
-    "main.tf",
-    "variables.tf"
-  ]
   environments = [
     {
       name = "dev"
@@ -24,5 +20,14 @@ locals {
     {
       name = "prod"
     }
+  ]
+  tf_files = [
+    "main.tf",
+    "variables.tf"
+  ]
+  wf_files = [
+    "Test.yml",
+    "ValidateAndDeploy.yml",
+    "ValidateAndPlan.yml"
   ]
 }

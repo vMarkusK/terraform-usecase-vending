@@ -1,0 +1,379 @@
+name: "Terraform Deploy"
+
+on:
+  push:
+    branches: ["main"]
+  release:
+    types: [published]
+
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+        with:
+          tflint_version: latest
+
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Show version
+        run: tflint --version
+
+      - name: Run TFLint
+        id: tflint
+        run: tflint --minimum-failure-severity=error --format=compact
+  scan:
+    name: "Scan"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner in IaC mode
+      id: trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'config'
+        hide-progress: true
+        format: 'table'
+        exit-code: '1'
+        severity: 'CRITICAL,HIGH'
+  
+  terraform_dev:
+    name: "Terraform Dev"
+    runs-on: ubuntu-latest
+    environment: Dev
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+    env:
+      BACKEND_FILE: ${{ vars.BACKEND_FILE }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: true
+      STATE_RG: ${{ secrets.STATE_RESOURCE_GROUP }}
+      STATE_ST: ${{ secrets.STATE_STORAGE_ACCOUNT }}
+    defaults:
+      run:
+        shell: bash
+    needs: [lint, scan]
+    if: |
+      always() &&
+      (needs.lint.result == 'success' || needs.lint.result == 'skipped') &&
+      (needs.scan.result == 'success' || needs.scan.result == 'skipped') &&
+      (github.ref_name == 'main') &&
+      (github.event_name == 'push')
+    steps:
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Whitelist GitHub Runner IP
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule add \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+          sleep 30
+  
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init -backend-config=./environments/$BACKEND_FILE
+
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    - name: Terraform Validate
+      run: terraform validate -no-color
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+
+    - name: Remove GitHub Runner IP from Whitelist
+      if: always()
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule remove  \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+
+  terraform_prod:
+    name: "Terraform Prod"
+    runs-on: ubuntu-latest
+    environment: Prod
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+    env:
+      BACKEND_FILE: ${{ vars.BACKEND_FILE }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: true
+      STATE_RG: ${{ secrets.STATE_RESOURCE_GROUP }}
+      STATE_ST: ${{ secrets.STATE_STORAGE_ACCOUNT }}
+    defaults:
+      run:
+        shell: bash
+    needs: [lint, scan]
+    if: |
+      always() &&
+      (needs.lint.result == 'success' || needs.lint.result == 'skipped') &&
+      (needs.scan.result == 'success' || needs.scan.result == 'skipped') &&
+      (github.event_name == 'release') &&
+      (github.event.action == 'published')
+    steps:
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Whitelist GitHub Runner IP
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule add \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+          sleep 30
+  
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init -backend-config=./environments/$BACKEND_FILE
+
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+
+    - name: Remove GitHub Runner IP from Whitelist
+      if: always()
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule remove  \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+
+  terraform_dev_check:
+    name: "Terraform Dev Drift Check"
+    runs-on: ubuntu-latest
+    environment: Dev
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+    env:
+      BACKEND_FILE: ${{ vars.BACKEND_FILE }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: true
+      STATE_RG: ${{ secrets.STATE_RESOURCE_GROUP }}
+      STATE_ST: ${{ secrets.STATE_STORAGE_ACCOUNT }}
+    defaults:
+      run:
+        shell: bash
+    needs: [terraform_dev]
+    if: |
+      always() &&
+      (needs.terraform_dev.result == 'success') &&
+      (github.ref_name == 'main') &&
+      (github.event_name == 'push')
+    steps:
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Whitelist GitHub Runner IP
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule add \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+          sleep 30
+  
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init -backend-config=./environments/$BACKEND_FILE
+
+    - name: Terraform Plan as Drift Check
+      run: |
+        export exitcode=0
+        terraform plan -input=false -detailed-exitcode -no-color || export exitcode=$?
+        
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+        
+        if [ $exitcode -eq 1 ]; then
+          echo Terraform Plan as Drift Check Failed!
+          exit 1
+        else 
+          exit 0
+        fi
+
+    - name: Remove GitHub Runner IP from Whitelist
+      if: always()
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule remove  \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+
+  terraform_prod_check:
+    name: "Terraform Prod Drift Check"
+    runs-on: ubuntu-latest
+    environment: Prod
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+    env:
+      BACKEND_FILE: ${{ vars.BACKEND_FILE }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_USE_OIDC: true
+      STATE_RG: ${{ secrets.STATE_RESOURCE_GROUP }}
+      STATE_ST: ${{ secrets.STATE_STORAGE_ACCOUNT }}
+    defaults:
+      run:
+        shell: bash
+    needs: [terraform_prod]
+    if: |
+      always() &&
+      (needs.terraform_prod.result == 'success') &&
+      (github.event_name == 'release') &&
+      (github.event.action == 'published')
+    steps:
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Whitelist GitHub Runner IP
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule add \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP
+          sleep 30
+  
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init -backend-config=./environments/$BACKEND_FILE
+
+    - name: Terraform Plan as Drift Check
+      run: |
+        export exitcode=0
+        terraform plan -input=false -detailed-exitcode -no-color || export exitcode=$?
+        
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+        
+        if [ $exitcode -eq 1 ]; then
+          echo Terraform Plan as Drift Check Failed!
+          exit 1
+        else 
+          exit 0
+        fi
+
+    - name: Remove GitHub Runner IP from Whitelist
+      if: always()
+      uses: azure/CLI@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          set -eu
+          agentIP=$(curl -s https://api.ipify.org/)
+          az storage account network-rule remove  \
+            --resource-group "${{ secrets.STATE_RESOURCE_GROUP }}" \
+            --account-name "${{ secrets.STATE_STORAGE_ACCOUNT }}" \
+            --ip-address $agentIP

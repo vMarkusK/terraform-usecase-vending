@@ -80,3 +80,16 @@ resource "github_repository_file" "github_tf_files" {
   commit_email        = var.commit_user.email
   overwrite_on_create = true
 }
+
+resource "github_repository_file" "github_wf_files" {
+  for_each = toset(local.wf_files)
+
+  repository          = github_repository.this.name
+  branch              = github_branch.main.branch
+  file                = format(".github/workflows/%s", each.key)
+  content             = file("${path.module}/files/workflow_${each.key}")
+  commit_message      = "Managed by Terraform"
+  commit_author       = var.commit_user.name
+  commit_email        = var.commit_user.email
+  overwrite_on_create = true
+}
