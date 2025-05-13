@@ -10,3 +10,19 @@ locals {
     "branch" = format("%s:ref:refs/heads/main", local.subject_prefix)
   }
 }
+
+# Codebase
+locals {
+  tf_files = [
+    "main.tf",
+    "variables.tf"
+  ]
+  environments = [
+    {
+      name = "dev"
+    },
+    {
+      name = "prod"
+    }
+  ]
+}
