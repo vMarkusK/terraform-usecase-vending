@@ -7,7 +7,7 @@ locals {
   app_name       = format("%s-github-actions", var.usecase)
   subject_prefix = format("repo:%s/%s", var.github_organization, local.repository_name)
   subjects = {
-    "environment" = format("%s:ref:environment:", local.subject_prefix)
+    "environment" = format("%s:environment:", local.subject_prefix)
     "branch"      = format("%s:ref:refs/heads/main", local.subject_prefix)
   }
 }
