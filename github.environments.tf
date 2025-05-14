@@ -11,6 +11,14 @@ resource "github_repository_environment" "this" {
 
 }
 
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep 10"
+  }
+
+  depends_on = [github_repository_environment.this]
+}
+
 resource "github_actions_environment_variable" "tfvars" {
   for_each = github_repository_environment.this
 
@@ -18,6 +26,8 @@ resource "github_actions_environment_variable" "tfvars" {
   environment   = github_repository_environment.this[each.key].environment
   variable_name = "VAR_FILE"
   value         = format("%s.tfvars", github_repository_environment.this[each.key].environment)
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_variable" "tfbackend" {
@@ -27,6 +37,8 @@ resource "github_actions_environment_variable" "tfbackend" {
   environment   = github_repository_environment.this[each.key].environment
   variable_name = "BACKEND_FILE"
   value         = format("%s.tfbackend", github_repository_environment.this[each.key].environment)
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_secret" "subscription_id" {
@@ -36,6 +48,8 @@ resource "github_actions_environment_secret" "subscription_id" {
   environment     = github_repository_environment.this[each.key].environment
   secret_name     = "AZURE_SUBSCRIPTION_ID"
   plaintext_value = var.subscription_id
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_secret" "tenant_id" {
@@ -45,6 +59,8 @@ resource "github_actions_environment_secret" "tenant_id" {
   environment     = github_repository_environment.this[each.key].environment
   secret_name     = "AZURE_TENANT_ID"
   plaintext_value = data.azuread_client_config.this.tenant_id
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_secret" "client_id" {
@@ -54,6 +70,8 @@ resource "github_actions_environment_secret" "client_id" {
   environment     = github_repository_environment.this[each.key].environment
   secret_name     = "AZURE_CLIENT_ID"
   plaintext_value = azuread_application.this.client_id
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_secret" "state_rg" {
@@ -63,6 +81,8 @@ resource "github_actions_environment_secret" "state_rg" {
   environment     = github_repository_environment.this[each.key].environment
   secret_name     = "STATE_RESOURCE_GROUP"
   plaintext_value = azurerm_resource_group.this.name
+
+  depends_on = [null_resource.delay]
 }
 
 resource "github_actions_environment_secret" "state_st" {
@@ -72,4 +92,6 @@ resource "github_actions_environment_secret" "state_st" {
   environment     = github_repository_environment.this[each.key].environment
   secret_name     = "STATE_STORAGE_ACCOUNT"
   plaintext_value = azurerm_storage_account.this.name
+
+  depends_on = [null_resource.delay]
 }
