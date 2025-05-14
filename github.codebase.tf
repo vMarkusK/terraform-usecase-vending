@@ -104,4 +104,13 @@ resource "github_repository_file" "github_wf_files" {
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
   overwrite_on_create = true
+
+  depends_on = [github_repository_file.gitignore,
+    github_repository_file.tflint,
+    github_repository_file.vscode_settings,
+    github_repository_file.github_devcontainer,
+    github_repository_file.github_env_tfvars,
+    github_repository_file.github_env_tfbackend,
+    github_repository_file.github_tf_files
+  ]
 }
