@@ -64,7 +64,7 @@ jobs:
   terraform_dev:
     name: "Terraform Dev"
     runs-on: ubuntu-latest
-    environment: Dev
+    environment: dev
     permissions:
       id-token: write
       contents: read
@@ -142,7 +142,7 @@ jobs:
   terraform_prod:
     name: "Terraform Prod"
     runs-on: ubuntu-latest
-    environment: Prod
+    environment: prod
     permissions:
       id-token: write
       contents: read
@@ -217,7 +217,7 @@ jobs:
   terraform_dev_check:
     name: "Terraform Dev Drift Check"
     runs-on: ubuntu-latest
-    environment: Dev
+    environment: dev
     permissions:
       id-token: write
       contents: read
@@ -299,7 +299,7 @@ jobs:
   terraform_prod_check:
     name: "Terraform Prod Drift Check"
     runs-on: ubuntu-latest
-    environment: Prod
+    environment: prod
     permissions:
       id-token: write
       contents: read

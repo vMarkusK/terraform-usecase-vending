@@ -62,7 +62,7 @@ jobs:
   terraform_dev:
     name: "Terraform Dev"
     runs-on: ubuntu-latest
-    environment: Dev
+    environment: dev
     permissions:
       id-token: write
       contents: read
