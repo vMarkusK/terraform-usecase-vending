@@ -24,3 +24,20 @@ resource "azurerm_role_assignment" "contributor" {
   principal_type                   = "ServicePrincipal"
   skip_service_principal_aad_check = true
 }
+
+resource "azurerm_role_assignment" "blob_owner" {
+  scope                            = azurerm_storage_account.this.id
+  role_definition_name             = "Storage Blob Data Owner"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "keyvault_admin" {
+  scope                            = data.azurerm_subscription.this.id
+  role_definition_name             = "Key Vault Data Access Administrator"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  skip_service_principal_aad_check = true
+}
+
