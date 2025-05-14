@@ -42,13 +42,22 @@ resource "github_repository_file" "github_devcontainer" {
   overwrite_on_create = true
 }
 
+data "template_file" "env_tfvars" {
+  for_each = toset(local.environments)
+
+  template = file("${path.module}/files/tfvars.tftpl")
+  vars = {
+    subscr_id = var.subscription_id
+  }
+}
+
 resource "github_repository_file" "github_env_tfvars" {
   for_each = toset(local.environments)
 
   repository          = github_repository.this.name
   branch              = github_branch.main.branch
   file                = format("environments/%s.tfvars", each.key)
-  content             = file("${path.module}/files/example.tfvars")
+  content             = data.template_file.env_tfvars[each.key].rendered
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email

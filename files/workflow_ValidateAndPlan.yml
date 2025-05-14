@@ -126,7 +126,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -input=false -no-color
+      run: terraform plan -var-file=./environments/$VAR_FILE -input=false -no-color
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
