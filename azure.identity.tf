@@ -9,12 +9,14 @@ resource "azuread_service_principal" "this" {
 }
 
 resource "azuread_application_federated_identity_credential" "this" {
-  display_name   = local.app_name
+  for_each = toset(local.environments)
+
+  display_name   = format("%s-%s", local.app_name, each.key)
   application_id = azuread_application.this.id
   description    = "Deployments for ${var.github_organization}-${local.repository_name}"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
-  subject        = local.subjects["branch"]
+  subject        = format("%s%s", local.subjects["environment"], each.key)
 }
 
 resource "azurerm_role_assignment" "contributor" {
