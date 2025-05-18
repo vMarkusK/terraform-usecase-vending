@@ -20,6 +20,8 @@ locals {
   ]
   tf_files = [
     "main.tf",
+    "locals.tf",
+    "outputs.tf",
     "variables.main.tf"
   ]
   wf_files = [

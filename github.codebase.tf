@@ -48,6 +48,9 @@ data "template_file" "env_tfvars" {
   template = file("${path.module}/files/tfvars.tftpl")
   vars = {
     subscr_id = var.subscription_id
+    env       = each.key
+    usecase   = var.usecase
+    suffix    = random_string.suffix.result
   }
 }
 
