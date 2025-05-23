@@ -1,8 +1,4 @@
 
-data "github_user" "current" {
-  username = ""
-}
-
 resource "github_repository" "this" {
   name = local.repository_name
 

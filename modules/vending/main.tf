@@ -32,12 +32,6 @@ terraform {
   required_version = ">= 1.12.0"
 }
 
-provider "azurerm" {
-  features {}
-  subscription_id     = var.subscription_id
-  storage_use_azuread = true
-}
-
 data "azuread_client_config" "this" {}
 
 data "azurerm_subscription" "this" {}
