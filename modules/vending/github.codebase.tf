@@ -133,6 +133,8 @@ resource "github_repository_file" "github_wf_files" {
     github_actions_environment_secret.client_id,
     github_actions_environment_secret.state_rg,
     github_actions_environment_secret.state_st,
-    azurerm_storage_container.this
+    azurerm_storage_container.this,
+    azurerm_role_assignment.blob_owner,
+    azurerm_role_assignment.contributor
   ]
 }
