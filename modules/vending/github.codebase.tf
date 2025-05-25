@@ -124,6 +124,14 @@ resource "github_repository_file" "github_wf_files" {
     github_repository_file.github_devcontainer,
     github_repository_file.github_env_tfvars,
     github_repository_file.github_env_tfbackend,
-    github_repository_file.github_tf_files
+    github_repository_file.github_tf_files,
+    github_repository_environment.this,
+    github_actions_environment_variable.tfvars,
+    github_actions_environment_variable.tfbackend,
+    github_actions_environment_secret.subscription_id,
+    github_actions_environment_secret.tenant_id,
+    github_actions_environment_secret.client_id,
+    github_actions_environment_secret.state_rg,
+    github_actions_environment_secret.state_st
   ]
 }
