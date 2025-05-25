@@ -20,10 +20,10 @@ GitHub Login
 gh auth login -h github.com 
 ```
 
-GitHub Token Refresh
+GitHub Token Refresh prior destroy
 
 ```
-gh auth refresh -h github.com 
+gh auth refresh -h github.com -s delete_repo
 ```
 
 ### Azure
