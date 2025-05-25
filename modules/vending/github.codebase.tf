@@ -1,6 +1,6 @@
 resource "github_repository_file" "gitignore" {
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = ".gitignore"
   content             = file("${path.module}/files/.gitignore")
   commit_message      = "Managed by Terraform"
@@ -11,7 +11,7 @@ resource "github_repository_file" "gitignore" {
 
 resource "github_repository_file" "tflint" {
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = ".tflint.hcl"
   content             = file("${path.module}/files/.tflint.hcl")
   commit_message      = "Managed by Terraform"
@@ -22,7 +22,7 @@ resource "github_repository_file" "tflint" {
 
 resource "github_repository_file" "vscode_settings" {
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = ".vscode/settings.json"
   content             = file("${path.module}/files/vscode_settings.json")
   commit_message      = "Managed by Terraform"
@@ -33,7 +33,7 @@ resource "github_repository_file" "vscode_settings" {
 
 resource "github_repository_file" "github_devcontainer" {
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = ".github/devcontainer.json"
   content             = file("${path.module}/files/github_devcontainer.json")
   commit_message      = "Managed by Terraform"
@@ -58,7 +58,7 @@ resource "github_repository_file" "github_env_tfvars" {
   for_each = toset(local.environments)
 
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = format("environments/%s.tfvars", each.key)
   content             = data.template_file.env_tfvars[each.key].rendered
   commit_message      = "Managed by Terraform"
@@ -82,7 +82,7 @@ resource "github_repository_file" "github_env_tfbackend" {
   for_each = toset(local.environments)
 
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = format("environments/%s.tfbackend", each.key)
   content             = data.template_file.env_tfbackend[each.key].rendered
   commit_message      = "Managed by Terraform"
@@ -96,7 +96,7 @@ resource "github_repository_file" "github_tf_files" {
   for_each = toset(local.tf_files)
 
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = each.key
   content             = file("${path.module}/files/${each.key}")
   commit_message      = "Managed by Terraform"
@@ -109,7 +109,7 @@ resource "github_repository_file" "github_wf_files" {
   for_each = toset(local.wf_files)
 
   repository          = github_repository.this.name
-  branch              = github_branch.main.branch
+  branch              = "main"
   file                = format(".github/workflows/%s", each.key)
   content             = file("${path.module}/files/workflow_${each.key}")
   commit_message      = "Managed by Terraform"
@@ -124,6 +124,17 @@ resource "github_repository_file" "github_wf_files" {
     github_repository_file.github_devcontainer,
     github_repository_file.github_env_tfvars,
     github_repository_file.github_env_tfbackend,
-    github_repository_file.github_tf_files
+    github_repository_file.github_tf_files,
+    github_repository_environment.this,
+    github_actions_environment_variable.tfvars,
+    github_actions_environment_variable.tfbackend,
+    github_actions_environment_secret.subscription_id,
+    github_actions_environment_secret.tenant_id,
+    github_actions_environment_secret.client_id,
+    github_actions_environment_secret.state_rg,
+    github_actions_environment_secret.state_st,
+    azurerm_storage_container.this,
+    azurerm_role_assignment.blob_owner,
+    azurerm_role_assignment.contributor
   ]
 }
