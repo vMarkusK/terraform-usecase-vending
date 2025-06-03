@@ -29,6 +29,14 @@ locals {
     "ValidateAndDeploy.yml",
     "ValidateAndPlan.yml"
   ]
+  vscode_files = [
+    "extensions.json",
+    "settings.json"
+  ]
+  github_files = [
+    "copilot-instructions.md",
+    "devcontainer.json"
+  ]
 }
 
 # Azure.Storage

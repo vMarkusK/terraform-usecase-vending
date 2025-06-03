@@ -21,21 +21,25 @@ resource "github_repository_file" "tflint" {
 }
 
 resource "github_repository_file" "vscode_settings" {
+  for_each = toset(local.vscode_files)
+
   repository          = github_repository.this.name
   branch              = "main"
-  file                = ".vscode/settings.json"
-  content             = file("${path.module}/files/vscode_settings.json")
+  file                = format(".vscode/%s", each.key)
+  content             = file("${path.module}/files/vscode_${each.key}")
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
   overwrite_on_create = true
 }
 
-resource "github_repository_file" "github_devcontainer" {
+resource "github_repository_file" "github_settings" {
+  for_each = toset(local.github_files)
+
   repository          = github_repository.this.name
   branch              = "main"
-  file                = ".github/devcontainer.json"
-  content             = file("${path.module}/files/github_devcontainer.json")
+  file                = format(".github/%s", each.key)
+  content             = file("${path.module}/files/github_${each.key}")
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
@@ -121,7 +125,7 @@ resource "github_repository_file" "github_wf_files" {
     github_repository_file.gitignore,
     github_repository_file.tflint,
     github_repository_file.vscode_settings,
-    github_repository_file.github_devcontainer,
+    github_repository_file.github_settings,
     github_repository_file.github_env_tfvars,
     github_repository_file.github_env_tfbackend,
     github_repository_file.github_tf_files,
