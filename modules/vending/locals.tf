@@ -29,6 +29,10 @@ locals {
     "ValidateAndDeploy.yml",
     "ValidateAndPlan.yml"
   ]
+  vscode_files = [
+    "extensions.json",
+    "settings.json"
+  ]
 }
 
 # Azure.Storage

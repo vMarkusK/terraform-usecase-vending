@@ -21,10 +21,12 @@ resource "github_repository_file" "tflint" {
 }
 
 resource "github_repository_file" "vscode_settings" {
+  for_each = toset(local.vscode_files)
+
   repository          = github_repository.this.name
   branch              = "main"
-  file                = ".vscode/settings.json"
-  content             = file("${path.module}/files/vscode_settings.json")
+  file                = format(".vscode/%s", each.key)
+  content             = file("${path.module}/files/vscode_${each.key}")
   commit_message      = "Managed by Terraform"
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
