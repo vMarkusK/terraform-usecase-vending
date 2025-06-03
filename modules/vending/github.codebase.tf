@@ -69,6 +69,12 @@ resource "github_repository_file" "github_env_tfvars" {
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
   overwrite_on_create = true
+
+  lifecycle {
+    ignore_changes = [
+      content
+    ]
+  }
 }
 
 data "template_file" "env_tfbackend" {
@@ -107,6 +113,12 @@ resource "github_repository_file" "github_tf_files" {
   commit_author       = var.commit_user.name
   commit_email        = var.commit_user.email
   overwrite_on_create = true
+
+  lifecycle {
+    ignore_changes = [
+      content
+    ]
+  }
 }
 
 resource "github_repository_file" "github_wf_files" {
