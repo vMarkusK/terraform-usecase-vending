@@ -33,6 +33,10 @@ locals {
     "extensions.json",
     "settings.json"
   ]
+  github_files = [
+    "copilot-instructions.md",
+    "devcontainer.json"
+  ]
 }
 
 # Azure.Storage
