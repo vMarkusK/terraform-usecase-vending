@@ -1,20 +1,25 @@
 # Terraform Usecase Vending for Azure
 
+Usecase Vending for my Terrafrom Azure Projects, incl. GitHub CI/CD Pipeline.
+
+![logo](media/logo1.png)
+
 Inspiration: <https://github.com/Azure-Terraformer/terraform-github-atat/blob/main/modules/azure-fn-core/README.md>
 
 ## Features
 
-**Creates a EntraID Federated Identity Credential**
+**Creates EntraID Federated Identity Credential**
 
-**Creates a Azure Storage Account for Terraform Remote State**
+**Creates Azure Storage Account for Terraform Remote State**
 
 - Including CMK Encryption
 - Including Security Hardening
 
-**Creates a GitHub Repo**
+**Creates GitHub Repo**
 
 - Including two Environments
   - Including Secrets and Variables for Deployment
+- Including Branch Protection
 
 **Adds Basic Codebase for Terraform Azure Projects**
 
