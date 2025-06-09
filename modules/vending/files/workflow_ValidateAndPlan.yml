@@ -63,6 +63,9 @@ jobs:
     name: "Terraform Dev"
     runs-on: ubuntu-latest
     environment: dev
+    concurrency:
+      group: dev_environment
+      cancel-in-progress: false
     permissions:
       id-token: write
       contents: read
