@@ -9,7 +9,7 @@ usecases = [
     }
   },
   {
-    usecase             = "ccdd"
+    usecase             = "cicd"
     github_organization = "vMarkusK"
     commit_user = {
       name  = "vMarkusK"
