@@ -1,0 +1,36 @@
+scan:
+  security-checks:
+    - config
+    - secret
+  skip-dirs:
+    - .git/
+    - .terraform/
+  skip-files:
+    - "*.tfvars.example"
+    - "*.md"
+
+rego:
+  enabled: true
+  policy:
+    - policies/azure-guardrails
+  #data:
+  #  - policy-data/
+  namespaces:
+    namespaces:
+    - builtin.azure
+    - builtin.terraform
+
+misconfiguration:
+  include-non-failures: false
+  terraform:
+    vars:
+      - terraform.tfvars
+     # - environments/prod.tfvars
+     # - environments/dev.tfvars
+
+format:  table
+
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM

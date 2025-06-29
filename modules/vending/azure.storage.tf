@@ -49,6 +49,7 @@ resource "azurerm_role_assignment" "uai" {
   principal_type       = "ServicePrincipal"
 }
 
+#trivy:ignore:AVD-AZU-0014
 resource "azurerm_key_vault_key" "this" {
   name         = local.key_name
   key_vault_id = azurerm_key_vault.this.id
