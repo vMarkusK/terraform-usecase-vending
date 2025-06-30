@@ -27,6 +27,7 @@ Inspiration: <https://github.com/Azure-Terraformer/terraform-github-atat/blob/ma
 - Including GitHub Devcontainer File
 - Including GitHub Actions for Deployment
 - Including VSCode Config
+- Including Trivy Config
 - Including TFLint Config
 
 ```
@@ -51,6 +52,7 @@ Inspiration: <https://github.com/Azure-Terraformer/terraform-github-atat/blob/ma
 ├── locals.tf
 ├── main.tf
 ├── outputs.tf
+├── trivy.yaml
 └── variables.main.tf
 ```
 
