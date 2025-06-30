@@ -1,6 +1,6 @@
 config {
     call_module_type = "local"  
-    varfile = ["environments/dev.tfvars", "environments/prod.tfvars", "terraform.tfvars", "*.auto.tfvars"]
+    varfile = ["environments/dev.tfvars", "environments/prod.tfvars"]
 }
 
 plugin "azurerm" {
