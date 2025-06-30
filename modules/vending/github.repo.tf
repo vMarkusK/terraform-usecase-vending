@@ -35,6 +35,7 @@ resource "github_repository_ruleset" "this" {
   depends_on = [
     github_repository_file.gitignore,
     github_repository_file.tflint,
+    github_repository_file.trivy,
     github_repository_file.vscode_settings,
     github_repository_file.github_settings,
     github_repository_file.github_env_tfvars,
@@ -47,6 +48,7 @@ resource "github_repository_ruleset" "this" {
     replace_triggered_by = [
       github_repository_file.gitignore,
       github_repository_file.tflint,
+      github_repository_file.trivy,
       github_repository_file.vscode_settings,
       github_repository_file.github_settings,
       github_repository_file.github_env_tfvars,
