@@ -1,4 +1,4 @@
-#trivy:ignore:avd-gi-0001
+#trivy:ignore:avd-git-0001
 resource "github_repository" "this" {
   name = local.repository_name
 
