@@ -3,6 +3,7 @@ resource "github_repository" "this" {
   name = local.repository_name
 
   visibility             = "public"
+  vulnerability_alerts   = true
   delete_branch_on_merge = false
   auto_init              = true
 }
