@@ -57,7 +57,7 @@ jobs:
         hide-progress: true
         format: 'table'
         exit-code: '1'
-        severity: 'CRITICAL,HIGH'
+        severity: 'CRITICAL,HIGH,MEDIUM'
   
   terraform_dev:
     name: "Terraform Dev"

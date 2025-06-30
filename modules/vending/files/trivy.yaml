@@ -1,0 +1,28 @@
+debug: false
+
+scan:
+  security-checks:
+    - config
+
+rego:
+  trace: false
+  enabled: true
+  namespaces:
+    - builtin.azure
+    - builtin.terraform
+    
+misconfiguration:
+  include-non-failures: false
+  scanners:
+    - terraform
+  terraform:
+    vars:
+      - environments/dev.tfvars
+      - environments/prod.tfvars
+
+format: table
+
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM

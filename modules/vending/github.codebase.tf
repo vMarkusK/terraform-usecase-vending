@@ -20,6 +20,17 @@ resource "github_repository_file" "tflint" {
   overwrite_on_create = true
 }
 
+resource "github_repository_file" "trivy" {
+  repository          = github_repository.this.name
+  branch              = "main"
+  file                = "trivy.yaml"
+  content             = file("${path.module}/files/trivy.yaml")
+  commit_message      = "Managed by Terraform"
+  commit_author       = var.commit_user.name
+  commit_email        = var.commit_user.email
+  overwrite_on_create = true
+}
+
 resource "github_repository_file" "vscode_settings" {
   for_each = toset(local.vscode_files)
 
