@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Render terraform docs inside the README.md and push changes back to PR branch
+    - name: Render terraform docs inside the README.md and push changes
       uses: terraform-docs/gh-actions@main
       with:
         working-dir: modules/vending

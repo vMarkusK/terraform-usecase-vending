@@ -29,6 +29,13 @@ terraform {
       version = ">= 2.2"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "rg-core-infra-001"
+    storage_account_name = "stcoreinfrastate001"
+    container_name       = "usecasevending"
+    key                  = "prod.tfstate"
+    use_azuread_auth     = true
+  }
   required_version = ">= 1.12.0"
 }
 
