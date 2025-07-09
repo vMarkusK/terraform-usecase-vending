@@ -43,3 +43,27 @@ resource "azurerm_role_assignment" "keyvault_admin" {
   skip_service_principal_aad_check = true
 }
 
+resource "azurerm_role_assignment" "keyvault_crypto" {
+  scope                            = data.azurerm_subscription.this.id
+  role_definition_name             = "Key Vault Crypto Officer"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "keyvault_secrets" {
+  scope                            = data.azurerm_subscription.this.id
+  role_definition_name             = "Key Vault Secrets Officer"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "keyvault_certificates" {
+  scope                            = data.azurerm_subscription.this.id
+  role_definition_name             = "Key Vault Certificates Officer"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  skip_service_principal_aad_check = true
+}
+
