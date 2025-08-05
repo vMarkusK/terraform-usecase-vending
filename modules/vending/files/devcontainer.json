@@ -1,19 +1,22 @@
 {
   "name": "terraform-devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/terraform:1": {},
     "ghcr.io/dhoeric/features/terraform-docs:1" : {},
     "ghcr.io/itsmechlark/features/trivy:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "waitFor": "onCreateCommand",
-  "updateContentCommand": "tflint --ini",
-  "postCreateCommand": "",
+  "postCreateCommand": "tflint --init",
     "customizations": {
         "vscode": {
+            "settings": {
+              "locale": "en"
+            },
             "extensions": [
+              "ms-vscode.azurecli",
               "Gruntfuggly.todo-tree",
               "matheusq94.TFS",
               "aquasecurityofficial.trivy-vulnerability-scanner",

@@ -9,6 +9,17 @@ resource "github_repository_file" "gitignore" {
   overwrite_on_create = true
 }
 
+resource "github_repository_file" "devcontainer" {
+  repository          = github_repository.this.name
+  branch              = "main"
+  file                = ".devcontainer/devcontainer.json"
+  content             = file("${path.module}/files/devcontainer.json")
+  commit_message      = "Managed by Terraform"
+  commit_author       = var.commit_user.name
+  commit_email        = var.commit_user.email
+  overwrite_on_create = true
+}
+
 resource "github_repository_file" "tflint" {
   repository          = github_repository.this.name
   branch              = "main"
@@ -146,6 +157,7 @@ resource "github_repository_file" "github_wf_files" {
 
   depends_on = [
     github_repository_file.gitignore,
+    github_repository_file.devcontainer,
     github_repository_file.tflint,
     github_repository_file.vscode_settings,
     github_repository_file.github_settings,

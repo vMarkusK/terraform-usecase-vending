@@ -34,8 +34,7 @@ locals {
     "settings.json"
   ]
   github_files = [
-    "copilot-instructions.md",
-    "devcontainer.json"
+    "copilot-instructions.md"
   ]
 }
 
