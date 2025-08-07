@@ -31,9 +31,10 @@ Inspiration: <https://github.com/Azure-Terraformer/terraform-github-atat/blob/ma
 - Including TFLint Config
 
 ```
+├── .devcontainer
+│   ├── devcontainer.json
 ├── .github
 │   ├── copilot-instructions.md
-│   ├── devcontainer.json
 │   └── workflows
 │       ├── Test.yml
 │       ├── ValidateAndDeploy.yml
