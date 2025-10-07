@@ -15,5 +15,13 @@ usecases = [
       name  = "vMarkusK"
       email = "markus.kraus@gmail.com"
     }
+  },
+  {
+    usecase             = "aifoundr"
+    github_organization = "vMarkusK"
+    commit_user = {
+      name  = "vMarkusK"
+      email = "markus.kraus@gmail.com"
+    }
   }
 ]
