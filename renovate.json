@@ -4,6 +4,12 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
+  "github-actions": {
+    "fileMatch": [
+      "^(workflow-templates|\\.github\\/workflows)\\/[^/]+\\.ya?ml$",
+      "^modules\\/vending\\/files\\/workflow_.+\\.ya?ml$"
+    ]
+  },
   "packageRules": [
     {
       "description": "Group minor and patch updates for Terraform to reduce PR volume.",
