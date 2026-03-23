@@ -97,7 +97,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Whitelist GitHub Runner IP
-      uses: azure/CLI@v2
+      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
       with:
         azcliversion: latest
         inlineScript: |
@@ -133,7 +133,7 @@ jobs:
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
-      uses: azure/CLI@v2
+      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
       with:
         azcliversion: latest
         inlineScript: |
