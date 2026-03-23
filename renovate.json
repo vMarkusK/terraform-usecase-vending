@@ -1,15 +1,32 @@
 {
-  "extends": ["config:base"],
-  "github-actions": {
-    "enabled": true
-  },
-  "terraform": {
-    "enabled": true
-  },
-  "tflint": {
-    "enabled": true
-  },
-  "devcontainer": {
-    "enabled": true
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "packageRules": [
+    {
+      "description": "Group minor and patch updates for Terraform to reduce PR volume.",
+      "matchManagers": ["terraform", "terraform-version"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Terraform Minor & Patch"
+    },
+    {
+      "description": "Require manual approval via Dependency Dashboard for Terraform major updates due to high risk of breaking changes.",
+      "matchManagers": ["terraform", "terraform-version"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Group GitHub Actions updates and enable automerge for minor and patch versions.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "GitHub Actions Updates",
+      "automerge": true
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false
   }
 }
