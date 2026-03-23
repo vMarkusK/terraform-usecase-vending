@@ -23,7 +23,7 @@ jobs:
 
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -check
+        run: terraform fmt -check -diff
         continue-on-error: true
 
       - name: Terraform Init without backend

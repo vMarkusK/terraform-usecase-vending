@@ -53,7 +53,7 @@ jobs:
 
     - name: Run Trivy vulnerability scanner in IaC mode
       id: trivy
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
       with:
         scan-type: 'config'
         hide-progress: true
@@ -122,7 +122,7 @@ jobs:
       run: terraform init -backend-config=./environments/$BACKEND_FILE
 
     - name: Terraform Format
-      run: terraform fmt -check
+      run: terraform fmt -check -diff
 
     - name: Terraform Validate
       run: terraform validate -no-color
@@ -204,7 +204,7 @@ jobs:
       run: terraform init -backend-config=./environments/$BACKEND_FILE
 
     - name: Terraform Format
-      run: terraform fmt -check
+      run: terraform fmt -check -diff
 
     - name: Terraform Apply
       run: terraform apply -var-file=./environments/$VAR_FILE -auto-approve -input=false
