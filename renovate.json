@@ -4,6 +4,7 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
+  "minimumReleaseAge": "4 days",
   "github-actions": {
     "fileMatch": [
       "^(workflow-templates|\\.github\\/workflows)\\/[^/]+\\.ya?ml$",
@@ -18,10 +19,10 @@
       "groupName": "Terraform Minor & Patch"
     },
     {
-      "description": "Require manual approval via Dependency Dashboard for Terraform major updates due to high risk of breaking changes.",
+      "description": "Create PRs for Terraform major updates immediately after the stability period.",
       "matchManagers": ["terraform", "terraform-version"],
       "matchUpdateTypes": ["major"],
-      "dependencyDashboardApproval": true
+      "dependencyDashboardApproval": false
     },
     {
       "description": "Group GitHub Actions updates and enable automerge for minor and patch versions.",
