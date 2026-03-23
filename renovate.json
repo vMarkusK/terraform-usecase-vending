@@ -1,0 +1,15 @@
+{
+  "extends": ["config:base"],
+  "github-actions": {
+    "enabled": true
+  },
+  "terraform": {
+    "enabled": true
+  },
+  "tflint": {
+    "enabled": true
+  },
+  "devcontainer": {
+    "enabled": true
+  }
+}
