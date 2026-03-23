@@ -21,7 +21,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - uses: terraform-linters/setup-tflint@v4
         name: Setup TFLint
@@ -49,7 +49,7 @@ jobs:
       run:
         shell: bash
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Run Trivy vulnerability scanner in IaC mode
       id: trivy
@@ -113,7 +113,7 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -195,7 +195,7 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -273,7 +273,7 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -359,7 +359,7 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
