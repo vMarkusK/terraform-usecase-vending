@@ -4,6 +4,7 @@
         "ms-azuretools.vscode-azure-github-copilot",
         "hashicorp.terraform",
         "matheusq94.tfs",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github"
     ]
 }

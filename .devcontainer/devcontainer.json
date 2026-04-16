@@ -27,22 +27,68 @@
 
     // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
+    
     "customizations": {
-    "vscode": {
-        "settings": {
-            "locale": "en"
-        },
-        "extensions": [
-            "ms-vscode.azurecli",
-            "Gruntfuggly.todo-tree",
-            "matheusq94.TFS",
-            "aquasecurityofficial.trivy-vulnerability-scanner",
-            "github.copilot",
-            "github.copilot-chat",
-            "github.vscode-github-actions",
-            "ms-azuretools.vscode-azureresourcegroups",
-            "ms-azuretools.vscode-azure-github-copilot"
-            ]
-    }
+        "vscode": {
+            "settings": {
+                "locale": "en"
+            },
+            "extensions": [
+                "ms-vscode.azurecli",
+                "Gruntfuggly.todo-tree",
+                "matheusq94.TFS",
+                "aquasecurityofficial.trivy-vulnerability-scanner",
+                "github.copilot",
+                "github.copilot-chat",
+                "github.vscode-github-actions",
+                "ms-azuretools.vscode-azureresourcegroups",
+                "ms-azuretools.vscode-azure-github-copilot",
+                "github.vscode-pull-request-github"
+                ],
+            "mcp": {
+                    "servers": {
+                        "io.github.hashicorp/terraform-mcp-server": {
+                            "type": "stdio",
+                            "command": "docker",
+                            "args": [
+                                "run",
+                                "-i",
+                                "--rm",
+                                "-e",
+                                "TFE_ADDRESS=${input:address}",
+                                "-e",
+                                "TFE_TOKEN=${input:token}",
+                                "-e",
+                                "ENABLE_TF_OPERATIONS=${input:enabled}",
+                                "docker.io/hashicorp/terraform-mcp-server:0.5.0"
+                            ],
+                            "gallery": "https://api.mcp.github.com",
+                            "version": "0.5.0"
+                        }
+                    },
+                    "inputs": [
+                        {
+                            "id": "address",
+                            "type": "promptString",
+                            "description": "",
+                            "password": false,
+                            "default": "https://app.terraform.io"
+                        },
+                        {
+                            "id": "token",
+                            "type": "promptString",
+                            "description": "",
+                            "password": true
+                        },
+                        {
+                            "id": "enabled",
+                            "type": "promptString",
+                            "description": "",
+                            "password": false,
+                            "default": "false"
+                        }
+                    ]
+                }
+        }
     }
 }
