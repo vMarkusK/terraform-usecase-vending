@@ -1,31 +1,48 @@
 {
-  "name": "terraform-devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-  "features": {
-    "ghcr.io/devcontainers/features/azure-cli:1": {},
-    "ghcr.io/devcontainers/features/terraform:1": {},
-    "ghcr.io/dhoeric/features/terraform-docs:1" : {},
-    "ghcr.io/itsmechlark/features/trivy:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-  },
-  "postCreateCommand": "tflint --init",
+    "name": "terraform-devcontainer",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "username": "vscode",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": "true"
+        },
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest",
+            "ppa": "false"
+        },
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
+        "ghcr.io/devcontainers/features/terraform:1": {},
+        "ghcr.io/devcontainers-extra/features/opentofu:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "uname -a",
+
+    // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
     "customizations": {
-        "vscode": {
-            "settings": {
-              "locale": "en"
-            },
-            "extensions": [
-              "ms-vscode.azurecli",
-              "Gruntfuggly.todo-tree",
-              "matheusq94.TFS",
-              "aquasecurityofficial.trivy-vulnerability-scanner",
-              "github.copilot",
-              "github.copilot-chat",
-              "github.vscode-github-actions",
-              "ms-azuretools.vscode-azureresourcegroups",
-              "ms-azuretools.vscode-azure-github-copilot"
-              ]
-        }
+    "vscode": {
+        "settings": {
+            "locale": "en"
+        },
+        "extensions": [
+            "ms-vscode.azurecli",
+            "Gruntfuggly.todo-tree",
+            "matheusq94.TFS",
+            "aquasecurityofficial.trivy-vulnerability-scanner",
+            "github.copilot",
+            "github.copilot-chat",
+            "github.vscode-github-actions",
+            "ms-azuretools.vscode-azureresourcegroups",
+            "ms-azuretools.vscode-azure-github-copilot"
+            ]
+    }
     }
 }
