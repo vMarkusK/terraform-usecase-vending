@@ -2,23 +2,23 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 4.28"
+      version = ">= 4.69.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = ">= 3.7"
+      version = ">= 3.8.1"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">= 3.3"
+      version = ">= 3.8.0"
     }
     github = {
       source  = "integrations/github"
-      version = ">= 6.6"
+      version = ">= 6.11.1"
     }
     time = {
       source  = "hashicorp/time"
-      version = ">= 0.13"
+      version = ">= 0.13.1"
     }
     http = {
       source  = "hashicorp/http"
