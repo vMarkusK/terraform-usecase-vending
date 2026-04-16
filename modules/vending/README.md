@@ -4,27 +4,27 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.3 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.28 |
-| <a name="requirement_github"></a> [github](#requirement\_github) | >= 6.6 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.8.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.69.0 |
+| <a name="requirement_github"></a> [github](#requirement\_github) | >= 6.11.1 |
 | <a name="requirement_http"></a> [http](#requirement\_http) | >= 3.5 |
-| <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.2 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.7 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.2.4 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.8.1 |
 | <a name="requirement_template"></a> [template](#requirement\_template) | >= 2.2 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.13 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.13.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | >= 3.3 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.28 |
-| <a name="provider_github"></a> [github](#provider\_github) | >= 6.6 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | >= 3.8.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.69.0 |
+| <a name="provider_github"></a> [github](#provider\_github) | >= 6.11.1 |
 | <a name="provider_http"></a> [http](#provider\_http) | >= 3.5 |
-| <a name="provider_null"></a> [null](#provider\_null) | >= 3.2 |
-| <a name="provider_random"></a> [random](#provider\_random) | >= 3.7 |
+| <a name="provider_null"></a> [null](#provider\_null) | >= 3.2.4 |
+| <a name="provider_random"></a> [random](#provider\_random) | >= 3.8.1 |
 | <a name="provider_template"></a> [template](#provider\_template) | >= 2.2 |
-| <a name="provider_time"></a> [time](#provider\_time) | >= 0.13 |
+| <a name="provider_time"></a> [time](#provider\_time) | >= 0.13.1 |
 
 ## Modules
 
