@@ -8,7 +8,9 @@ Inspiration: <https://github.com/Azure-Terraformer/terraform-github-atat/blob/ma
 
 ## Features
 
-**Creates EntraID Federated Identity Credential**
+**Creates Entra ID Federated Identity Credentials**
+
+- Supports immutable GitHub OIDC subjects containing organization and repository IDs for new repositories, while retaining name-based subjects for existing repositories.
 
 **Creates Azure Storage Account for Terraform Remote State**
 
