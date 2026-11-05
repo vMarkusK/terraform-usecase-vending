@@ -21,9 +21,9 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
-      - uses: terraform-linters/setup-tflint@b480b8fcdaa6f2c577f8e4fa799e89e756bb7c93 # v6
+      - uses: terraform-linters/setup-tflint@6ffdbaa3be476b3431f7275c26966ef32ff60337 #v6.3.2
         name: Setup TFLint
         with:
           tflint_version: latest
@@ -49,11 +49,11 @@ jobs:
       run:
         shell: bash
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
     - name: Run Trivy vulnerability scanner in IaC mode
       id: trivy
-      uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+      uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 #v0.36.0
       with:
         scan-type: 'config'
         hide-progress: true
@@ -93,14 +93,14 @@ jobs:
       (github.event_name == 'push')
     steps:
     - name: Azure login
-      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
+      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 #v3.1.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Whitelist GitHub Runner IP
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -113,10 +113,10 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4
+      uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e #v4.0.1
 
     - name: Terraform Init
       run: terraform init -backend-config=./environments/$BACKEND_FILE
@@ -132,7 +132,7 @@ jobs:
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -175,14 +175,14 @@ jobs:
       (github.event.action == 'published')
     steps:
     - name: Azure login
-      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
+      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 #v3.1.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Whitelist GitHub Runner IP
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -195,10 +195,10 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4
+      uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e #v4.0.1
 
     - name: Terraform Init
       run: terraform init -backend-config=./environments/$BACKEND_FILE
@@ -211,7 +211,7 @@ jobs:
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -253,14 +253,14 @@ jobs:
       (github.event_name == 'push')
     steps:
     - name: Azure login
-      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
+      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 #v3.1.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Whitelist GitHub Runner IP
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -273,10 +273,10 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4
+      uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e #v4.0.1
 
     - name: Terraform Init
       run: terraform init -backend-config=./environments/$BACKEND_FILE
@@ -297,7 +297,7 @@ jobs:
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -339,14 +339,14 @@ jobs:
       (github.event.action == 'published')
     steps:
     - name: Azure login
-      uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
+      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 #v3.1.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Whitelist GitHub Runner IP
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
@@ -359,10 +359,10 @@ jobs:
           sleep 30
   
     - name: Checkout
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 # v4
+      uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e #v4.0.1
 
     - name: Terraform Init
       run: terraform init -backend-config=./environments/$BACKEND_FILE
@@ -383,7 +383,7 @@ jobs:
 
     - name: Remove GitHub Runner IP from Whitelist
       if: always()
-      uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956 # v2
+      uses: azure/CLI@21e079d8fb6ddd5b3c66b6c52e4bfafcdad9d7d0 #v2.92.0
       with:
         azcliversion: latest
         inlineScript: |
