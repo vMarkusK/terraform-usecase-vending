@@ -61,3 +61,7 @@ resource "github_repository_ruleset" "this" {
   }
 
 }
+
+data "github_actions_repository_oidc_subject_claim_customization_template" "this" {
+  name = github_repository.this.name
+}
