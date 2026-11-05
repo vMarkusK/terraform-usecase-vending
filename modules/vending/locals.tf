@@ -6,9 +6,20 @@ locals {
 locals {
   app_name       = format("%s-github-actions", var.usecase)
   subject_prefix = format("repo:%s/%s", var.github_organization, local.repository_name)
+  immutable_subject_prefix = format(
+    "repo:%s@%s/%s@%s",
+    var.github_organization,
+    data.github_user.this.id,
+    local.repository_name,
+    github_repository.this.repo_id
+  )
   subjects = {
     "environment" = format("%s:environment:", local.subject_prefix)
     "branch"      = format("%s:ref:refs/heads/main", local.subject_prefix)
+  }
+  immutable_subjects = {
+    for environment in local.environments :
+    environment => format("%s:environment:%s", local.immutable_subject_prefix, environment)
   }
 }
 

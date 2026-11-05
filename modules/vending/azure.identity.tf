@@ -19,6 +19,17 @@ resource "azuread_application_federated_identity_credential" "this" {
   subject        = format("%s%s", local.subjects["environment"], each.key)
 }
 
+resource "azuread_application_federated_identity_credential" "immutable" {
+  for_each = toset(local.environments)
+
+  display_name   = format("%s-%s-immutable", local.app_name, each.key)
+  application_id = azuread_application.this.id
+  description    = "Deployments for ${var.github_organization}-${local.repository_name} using immutable GitHub OIDC subject claims"
+  audiences      = ["api://AzureADTokenExchange"]
+  issuer         = "https://token.actions.githubusercontent.com"
+  subject        = local.immutable_subjects[each.key]
+}
+
 resource "azurerm_role_assignment" "contributor" {
   scope                            = data.azurerm_subscription.this.id
   role_definition_name             = "Contributor"
@@ -66,4 +77,3 @@ resource "azurerm_role_assignment" "keyvault_certificates" {
   principal_type                   = "ServicePrincipal"
   skip_service_principal_aad_check = true
 }
-

@@ -8,6 +8,10 @@ resource "github_repository" "this" {
   auto_init              = true
 }
 
+data "github_user" "this" {
+  username = var.github_organization
+}
+
 resource "github_actions_variable" "application_name" {
   repository    = github_repository.this.name
   variable_name = "APPLICATION_NAME"
