@@ -79,6 +79,7 @@ No modules.
 | [azuread_client_config.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
 | [azurerm_subscription.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 | [github_user.this](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/user) | data source |
+| [github_actions_repository_oidc_subject_claim_customization_template.this](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/actions_repository_oidc_subject_claim_customization_template) | data source |
 | [http_http.icanhazip](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 | [template_file.env_tfbackend](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 | [template_file.env_tfvars](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
@@ -95,5 +96,8 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_github_repository_name"></a> [github\_repository\_name](#output\_github\_repository\_name) | The name of the GitHub repository created for the usecase |
+| <a name="output_github_repository_oidc_subject_claim_customization_template"></a> [github\_repository\_oidc\_subject\_claim\_customization\_template](#output\_github\_repository\_oidc\_subject\_claim\_customization\_template) | The OIDC subject claim customization template for the GitHub repository created for the usecase |
 <!-- END_TF_DOCS -->
