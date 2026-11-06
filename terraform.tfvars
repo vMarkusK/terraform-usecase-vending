@@ -17,8 +17,9 @@ usecases = [
     }
   },
   {
-    usecase             = "nc"
-    github_organization = "vMarkusK"
+    usecase               = "nc"
+    github_organization   = "vMarkusK"
+    use_immutable_subject = true
     commit_user = {
       name  = "vMarkusK"
       email = "markus.kraus@gmail.com"

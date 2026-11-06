@@ -22,6 +22,12 @@ variable "github_organization" {
   type        = string
 }
 
+variable "use_immutable_subject" {
+  description = "Whether to use immutable GitHub OIDC subject claims"
+  type        = bool
+  default     = false
+}
+
 variable "commit_user" {
   type = object({
     name  = string

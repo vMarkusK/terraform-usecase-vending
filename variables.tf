@@ -6,8 +6,9 @@ variable "subscription_id" {
 variable "usecases" {
   description = "Object for usecases"
   type = list(object({
-    usecase             = string
-    github_organization = string
+    usecase               = string
+    github_organization   = string
+    use_immutable_subject = optional(bool, false)
     commit_user = object({
       name  = string
       email = string

@@ -35,7 +35,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [azuread_application.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
-| [azuread_application_federated_identity_credential.immutable](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential) | resource |
 | [azuread_application_federated_identity_credential.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential) | resource |
 | [azuread_service_principal.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
 | [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
@@ -92,6 +91,7 @@ No modules.
 | <a name="input_github_organization"></a> [github\_organization](#input\_github\_organization) | GitHub organization name | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location for all resources | `string` | n/a | yes |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | Subscription ID for all resources | `string` | n/a | yes |
+| <a name="input_use_immutable_subject"></a> [use\_immutable\_subject](#input\_use\_immutable\_subject) | Whether to use immutable GitHub OIDC subject claims | `bool` | `false` | no |
 | <a name="input_usecase"></a> [usecase](#input\_usecase) | UseCase Shortname | `string` | n/a | yes |
 
 ## Outputs
